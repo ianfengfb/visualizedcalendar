@@ -5,7 +5,7 @@ function LandingPage() {
         <>
             <h1>Landing Page</h1>
             <p>
-                Go to <Link to='/calendar'>the calendar</Link>
+                Go to <Link to='/login'>login</Link>
             </p>
         </>
     )
