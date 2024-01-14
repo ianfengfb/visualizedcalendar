@@ -1,12 +1,12 @@
 import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { readAllUser } from "../_reducers/UserSlice";
+import { authActions } from "../_actions/authActions";
 
 function Calender() {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        dispatch(readAllUser());
+        dispatch(authActions.readAllUser());
     },[]);
     
     return (

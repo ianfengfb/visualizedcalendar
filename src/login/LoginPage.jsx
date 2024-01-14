@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import './CSS/style.css';
 import { useDispatch, useSelector } from "react-redux";
-import { loginUser } from "../_reducers/UserSlice";
 import { useNavigate } from "react-router-dom";
+import { authActions } from "../_actions/authActions";
 
 
 function LoginPage() {
@@ -20,7 +20,7 @@ function LoginPage() {
     }, [loginIsDone]);
 
     const loginHandler = () => {
-        dispatch(loginUser({email, password}));
+        dispatch(authActions.loginUser({email, password}));
     }
 
     return (
