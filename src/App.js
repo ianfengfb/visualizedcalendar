@@ -4,7 +4,9 @@ import ErrorPage from "./components/ErrorPage";
 import { LandingPage } from "./landing/LandingPage";
 import { LoginPage } from "./login/LoginPage";
 import ProtectedLayout from "./components/ProtectedLayout";
-import { Calender } from "./Calenders/Calender";
+import { Calendar } from "./Calenders/Calendar";
+import { EventTypesPage } from "./Calenders/EventTypes/EventTypesPage";
+import { CreateNewEventType } from "./Calenders/EventTypes/CreateNewEventType";
 
 const router = createBrowserRouter([
   {
@@ -19,7 +21,6 @@ const router = createBrowserRouter([
 				path: '/login',
 				element: <LoginPage />,
 			},
-      
     ]
   },
   {
@@ -28,9 +29,22 @@ const router = createBrowserRouter([
     errorElement: <ErrorPage />,
     children: [
       {
-				path: '/calender',
-				element: <Calender />,
+				path: '/calendar',
+				element: <Calendar />,
 			},
+      {
+        path: '/event-types',
+        children: [
+          {
+            index: true,
+            element: <EventTypesPage />,
+          },
+          {
+            path: 'create',
+            element: <CreateNewEventType />,
+          },
+        ],
+      },
     ],
   },
 ])

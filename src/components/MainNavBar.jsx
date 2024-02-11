@@ -11,24 +11,19 @@ function MainNavBar () {
                 <div className="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul className="navbar-nav me-auto mb-2 mb-lg-0">
                     <li className="nav-item">
-                    <NavLink className={({isActive}) => isActive ? 'nav-link active' : 'nav-link'} to='/' end>Home</NavLink>
+                        <NavLink className={({isActive}) => isActive ? 'nav-link active' : 'nav-link'} to='/' end>Home</NavLink>
                     </li>
                     <li className="nav-item">
-                    <NavLink className={({isActive}) => isActive ? 'nav-link active' : 'nav-link'} to='/calendar'>Calendar</NavLink>
+                        <NavLink className={({isActive}) => isActive ? 'nav-link active' : 'nav-link'} to='/calendar'>Calendar</NavLink>
                     </li>
                     <li className="nav-item dropdown">
-                    <a className="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        Dropdown
-                    </a>
-                    <ul className="dropdown-menu">
-                        <li><a className="dropdown-item" href="#">Action</a></li>
-                        <li><a className="dropdown-item" href="#">Another action</a></li>
-                        <li><hr className="dropdown-divider"/></li>
-                        <li><a className="dropdown-item" href="#">Something else here</a></li>
-                    </ul>
-                    </li>
-                    <li className="nav-item">
-                    <a className="nav-link disabled" aria-disabled="true">Disabled</a>
+                        <a className="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Event Types
+                        </a>
+                        <ul className="dropdown-menu">
+                            <li><NavLink className={({isActive}) => isActive ? 'nav-link active' : 'nav-link'} to='/event-types'>Event Types List</NavLink></li>
+                            <li><NavLink className={({isActive}) => isActive ? 'nav-link active' : 'nav-link'} to='/event-types/create'>Create New Event Type</NavLink></li>
+                        </ul>
                     </li>
                 </ul>
                 <form className="d-flex" role="search">

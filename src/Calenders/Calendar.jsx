@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { authActions } from "../_actions/authActions";
 
-function Calender() {
+function Calendar() {
     const dispatch = useDispatch();
 
     useEffect(() => {
@@ -11,9 +11,9 @@ function Calender() {
     
     return (
         <>
-            <h1>Calender</h1>
+            <h1>Calendar</h1>
         </>
     )
 }
 
-export {Calender};
+export {Calendar};
