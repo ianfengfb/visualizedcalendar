@@ -17,6 +17,7 @@ import IconBreadcrumbs from "./Breadcrumbs";
 const StyledToolbar = styled(Toolbar)({
   display: "flex",
   justifyContent: "space-between",
+  backgroundColor: "#474747",
 });
 
 const Search = styled("div")(({ theme }) => ({
