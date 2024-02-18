@@ -7,8 +7,8 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
 import dayjs from "dayjs";
 import React, { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
-import { authActions } from "../_actions/authActions";
+import { useDispatch, useSelector } from "react-redux";
+import { eventActions } from '../_actions/eventsActions';
 
     const theme = createTheme({
         palette: {
@@ -25,6 +25,8 @@ import { authActions } from "../_actions/authActions";
 
 
 function AddNewPoper(props) {
+
+    const dispatch = useDispatch();
     
     const [addNewHover, setAddNewHover] = useState(false);
     const [closeHover, setCloseHover] = useState(false);
@@ -34,6 +36,14 @@ function AddNewPoper(props) {
     const [mandatory, setMandatory] = useState(true);
     const [happy, setHappy] = useState('');
     const [meaning, setMeaning] = useState('');
+
+    const saveIsDone = useSelector(state => state.createEvent.isDone);
+
+    useEffect(() => {
+        if (saveIsDone) {
+            closePoper();
+        }
+    }, [saveIsDone]);
 
     const closePoper = () => {
         setCloseHover(false);
@@ -72,6 +82,18 @@ function AddNewPoper(props) {
         } else {
             setMeaning(value);
         }
+    }
+
+    const addNewHandler = () => {
+        let data = new FormData();
+        data.append('title', event);
+        data.append('event_type_id', 1);
+        data.append('duration', duration.format('HH:mm'));
+        data.append('mondatory', mandatory ? 1 : 0);
+        data.append('happy', happy);
+        data.append('meaning', meaning);
+        data.append('date', dayjs().format('YYYY-MM-DD'));
+        dispatch(eventActions.createEvent(data));
     }
 
     return (
@@ -115,7 +137,7 @@ function AddNewPoper(props) {
                                 </Select>
                             </FormControl>
                             <Stack direction='row' justifyContent='end' alignItems='center'>
-                                <IconButton aria-label="add" size="large" onMouseOver={() => setAddNewHover(true)} onMouseOut={() => setAddNewHover(false)}>
+                                <IconButton aria-label="add" size="large" onMouseOver={() => setAddNewHover(true)} onMouseOut={() => setAddNewHover(false)} onClick={addNewHandler}>
                                     {addNewHover ? <CheckCircle color='time'/> : <CheckCircleOutline color='time'/>}
                                 </IconButton>
                                 <IconButton aria-label="add" size="large" onMouseOver={() => setCloseHover(true)} onMouseOut={() => setCloseHover(false)} onClick={closePoper}>
