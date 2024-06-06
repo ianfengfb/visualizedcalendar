@@ -62,4 +62,60 @@ const getEventTypesSlice = createSlice({
     },
 });
 
-export { createEventTypeSlice, getEventTypesSlice}
+const updateEventTypeSlice = createSlice({
+    name: "updateEventType",
+    initialState: {
+        isDone: false,
+        isFailed: false,
+        eventType: null,
+        error: null,
+    },
+    reducers: {},
+    extraReducers: (builder) =>{
+        builder
+        .addCase(eventTypeActions.updateEventType.pending, (state) => {
+            state.isDone = false;
+            state.isFailed = false;
+        })
+        .addCase(eventTypeActions.updateEventType.fulfilled, (state, action) => {
+            state.isDone = true;
+            state.eventType = action.payload;
+            state.isFailed = false;
+        })
+        .addCase(eventTypeActions.updateEventType.rejected, (state, action) => {
+            state.isDone = false;
+            state.isFailed = true;
+            state.error = action.error.message;
+        });
+    },
+});
+
+const deleteEventTypeSlice = createSlice({
+    name: "deleteEventType",
+    initialState: {
+        isDone: false,
+        isFailed: false,
+        eventType: null,
+        error: null,
+    },
+    reducers: {},
+    extraReducers: (builder) =>{
+        builder
+        .addCase(eventTypeActions.deleteEventType.pending, (state) => {
+            state.isDone = false;
+            state.isFailed = false;
+        })
+        .addCase(eventTypeActions.deleteEventType.fulfilled, (state, action) => {
+            state.isDone = true;
+            state.eventType = action.payload;
+            state.isFailed = false;
+        })
+        .addCase(eventTypeActions.deleteEventType.rejected, (state, action) => {
+            state.isDone = false;
+            state.isFailed = true;
+            state.error = action.error.message;
+        });
+    },
+});
+
+export { createEventTypeSlice, getEventTypesSlice, updateEventTypeSlice, deleteEventTypeSlice}

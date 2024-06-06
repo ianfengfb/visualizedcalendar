@@ -3,9 +3,10 @@ import { Box, Button, Divider, Fade, List, ListItem, ListItemButton, Paper, Popp
 
 
 import React, { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { authActions } from "../_actions/authActions";
 import { AddNewPoper } from './AddNewPoper';
+import { eventActions } from '../_actions/eventsActions';
 
 
     
@@ -86,13 +87,16 @@ function Calendar() {
 
     const dispatch = useDispatch();
 
+    const isFetching = useSelector(state => state.getEvents.isFetching);
+    const events = useSelector(state => state.getEvents.events && state.getEvents.events.data ? state.getEvents.events.data : []);
+
     const [openDetails, setOpenDetails] = useState(false);
     const [anchorEl, setAnchorEl] = useState(null);
 
 
-    // useEffect(() => {
-    //     dispatch(authActions.readAllUser());
-    // },[]);
+    useEffect(() => {
+        dispatch(eventActions.getEvents());
+    },[]);
 
     const handleClick = (event) => {
         if(anchorEl === null){
@@ -123,45 +127,45 @@ function Calendar() {
                     </Stack>
                 </ItemDate>
                 <Stack direction='row' style={{ flexGrow: 1}}>
-                    {TITLE_ARR.map((item, index) => (
-                    <DailyBox key={index}>
-                        <TitleBox>
-                            <Typography sx={{color: '#474747'}}>{item.day}</Typography>
-                            {!item.today && <DailyTitle >{item.date}</DailyTitle>}
-                            {item.today && <DailyTitle sx={{backgroundColor: '#d2d2d2', borderRadius: '5px', padding: '0 5px'}}>{item.date}</DailyTitle>}
-                        </TitleBox>
-                        <List
-                        sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}
-                        aria-label="contacts"
-                        >
-                            <ListItem disablePadding>
-                                <ListItemButton sx={{backgroundColor:'red'}}>
-                                    <Typography><Work sx={{marginRight: '0.5rem'}}/>ssdfsf dfdf fsd fsd fsdfs fsd</Typography>
-                                </ListItemButton>
-                            </ListItem>
-                            <Divider variant="middle" component="li" />
-                            <ListItem disablePadding>
-                                <ListItemButton onClick={() => setOpenDetails(true)}>
-                                    <Typography><School sx={{marginRight: '0.5rem'}}/>ssdfsf</Typography>
-                                </ListItemButton>
-                            </ListItem>
-                            <ListItem disablePadding>
-                                <ListItemButton>
-                                    <Typography><SportsBasketball sx={{marginRight: '0.5rem'}}/>ssdfsf</Typography>
-                                </ListItemButton>
-                            </ListItem>
-                            <ListItem disablePadding>
-                                <ListItemButton>
-                                    <Typography><EditCalendar sx={{marginRight: '0.5rem'}}/>ssdfsf</Typography>
-                                </ListItemButton>
-                            </ListItem>
-                            <ListItem disablePadding sx={{marginTop: '0.5rem'}}>
-                                <ListItemButton aria-describedby={'simple-'+index} onClick={(e) => handleClick(e)}>
-                                    <Typography sx={{width: '100%', textAlign: 'center', color: '#8c8c8c', fontWeight: 'bold'}}>+ Record Time</Typography>
-                                </ListItemButton>
-                            </ListItem>
-                        </List>
-                    </DailyBox>))}
+                    {TITLE_ARR.map((item, index) => 
+                    {  
+                        if (!isFetching) {
+                        return (
+                            <DailyBox key={index}>
+                                <TitleBox>
+                                    <Typography sx={{color: '#474747'}}>{item.day}</Typography>
+                                    {!item.today && <DailyTitle >{item.date}</DailyTitle>}
+                                    {item.today && <DailyTitle sx={{backgroundColor: '#d2d2d2', borderRadius: '5px', padding: '0 5px'}}>{item.date}</DailyTitle>}
+                                </TitleBox>
+                                <List
+                                sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}
+                                aria-label="contacts"
+                                >
+                                    {events.map((event, ind) => {
+                                        return (
+                                            <>
+                                                <ListItem disablePadding key={index + 'event' + ind}>
+                                                    <ListItemButton onClick={() => setOpenDetails(true)}>
+                                                        <Typography><Work sx={{marginRight: '0.5rem'}}/>{event.title}</Typography>
+                                                    </ListItemButton>
+                                                </ListItem>
+                                                <Divider variant="middle" component="li" />
+                                            </>
+                                        )
+                                    })}
+                                    <ListItem disablePadding sx={{marginTop: '0.5rem'}}>
+                                        <ListItemButton aria-describedby={'simple-'+index} onClick={(e) => handleClick(e)}>
+                                            <Typography sx={{width: '100%', textAlign: 'center', color: '#8c8c8c', fontWeight: 'bold'}}>+ Record Time</Typography>
+                                        </ListItemButton>
+                                    </ListItem>
+                                </List>
+                            </DailyBox>)} else {
+                                return (
+                                    <p>Loading...</p>
+                                )
+                            }
+                        }
+                )}
                 </Stack>
                 <AddNewPoper anchorEl={anchorEl} setAnchorEl={setAnchorEl}/>
             </Stack>

@@ -15,6 +15,21 @@ const createEvent = createAsyncThunk (
     }
 );
 
+const getEvents = createAsyncThunk (
+    'event/getEvents',
+    async () => {
+        try {
+            const resp = await axios.get('/events');
+            if (resp.status === 200) {
+                return resp.data;
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    }
+);
+
 export const eventActions = {
     createEvent,
+    getEvents
 };

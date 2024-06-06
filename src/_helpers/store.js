@@ -1,7 +1,7 @@
 import { configureStore, createAsyncThunk } from "@reduxjs/toolkit";
 import userReducer from "../_reducers/UserSlice";
-import {createEventTypeSlice, getEventTypesSlice} from "../_reducers/eventTypeSlice";
-import { createEventSlice } from "../_reducers/eventsSlice";
+import {createEventTypeSlice, getEventTypesSlice, updateEventTypeSlice, deleteEventTypeSlice} from "../_reducers/eventTypeSlice";
+import { createEventSlice, getEventsSlice } from "../_reducers/eventsSlice";
 
 
 const store = configureStore({
@@ -9,7 +9,10 @@ const store = configureStore({
         user: userReducer,
         createEventType: createEventTypeSlice.reducer,
         getEventTypes: getEventTypesSlice.reducer,
+        updateEventType: updateEventTypeSlice.reducer,
+        deleteEventType: deleteEventTypeSlice.reducer,
         createEvent: createEventSlice.reducer,
+        getEvents: getEventsSlice.reducer,
     },
 });
 
